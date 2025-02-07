@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-roboto bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins;
+  }
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #E0EAFC 0%, #CFDEF3 100%);
+}
+
+.dark .gradient-bg {
+  background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%);
+}
+
+.skill-progress {
+  @apply h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700;
+}
+
+.skill-progress-bar {
+  @apply h-full bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-1000;
+}
+
+.timeline-item {
+  @apply relative pl-8 pb-8 border-l-2 border-gray-200 dark:border-gray-700 last:border-0;
+}
+
+.timeline-dot {
+  @apply absolute -left-[9px] w-4 h-4 rounded-full bg-gradient-to-r from-blue-400 to-purple-500;
+}
