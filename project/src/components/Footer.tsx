@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowUp, Github, Linkedin, Mail } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { ArrowUp, Github, Linkedin, Mail, Heart, Code2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,155 +25,103 @@ const Footer = () => {
     { icon: Mail, href: 'mailto:anitraj862002@gmail.com', label: 'Email' },
   ];
 
-  const quickLinks = [
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Education', href: '#education' },
-    { label: 'Contact', href: '#contact' },
-  ];
-
   return (
-    <footer className="bg-neutral-900 dark:bg-black text-white relative overflow-hidden border-t border-neutral-800">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-primary-DEFAULT/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent-DEFAULT/10 rounded-full blur-3xl" />
-      </div>
+    <footer className="bg-white dark:bg-neutral-950 pt-24 pb-12 relative overflow-hidden">
+      {/* Decorative Line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neutral-200 dark:via-white/10 to-transparent" />
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        {/* Main Footer Content */}
-        <div className="py-12 md:py-16">
-          <div className="grid md:grid-cols-3 gap-12 mb-12">
-            {/* Brand Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h3 className="text-2xl font-bold gradient-text mb-3">AR</h3>
-              <p className="text-neutral-400 mb-6">
-                Building innovative mobile solutions with Flutter and Android. Let's create something extraordinary together.
-              </p>
-              <div className="flex gap-4">
-                {socialLinks.map((link) => {
-                  const Icon = link.icon;
-                  return (
-                    <motion.a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 bg-neutral-800 hover:bg-primary-DEFAULT text-neutral-400 hover:text-white rounded-lg transition-all duration-300"
-                      whileHover={{ scale: 1.1, y: -4 }}
-                      whileTap={{ scale: 0.95 }}
-                      aria-label={link.label}
-                    >
-                      <Icon size={20} />
-                    </motion.a>
-                  );
-                })}
-              </div>
-            </motion.div>
-
-            {/* Quick Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <h4 className="font-bold text-lg mb-6">Quick Links</h4>
-              <ul className="space-y-3">
-                {quickLinks.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-neutral-400 hover:text-primary-light transition-colors duration-200 inline-flex items-center gap-2 group"
-                    >
-                      <span className="w-1.5 h-1.5 bg-primary-DEFAULT rounded-full group-hover:scale-150 transition-transform" />
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* CTA Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h4 className="font-bold text-lg mb-6">Let's Work Together</h4>
-              <p className="text-neutral-400 mb-6">
-                Ready to bring your ideas to life? Let's collaborate and create something amazing.
-              </p>
-              <motion.a
-                href="#contact"
-                className="inline-block px-6 py-3 bg-gradient-to-r from-primary-DEFAULT to-accent-DEFAULT text-white font-semibold rounded-lg hover:shadow-lg transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get in Touch
-              </motion.a>
-            </motion.div>
-          </div>
-
-          {/* Divider */}
-          <div className="border-t border-neutral-800 my-8" />
-
-          {/* Bottom Footer */}
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        <div className="flex flex-col items-center text-center">
+          {/* Logo/Brand */}
           <motion.div
-            className="flex flex-col md:flex-row items-center justify-between gap-6"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="mb-8"
           >
-            <p className="text-neutral-400 text-sm text-center md:text-left">
-              © {currentYear} <span className="font-semibold text-white">Anit Raj</span>. All rights reserved.
-            </p>
-            
-            <div className="flex items-center gap-6 text-sm">
-              <a
-                href="#"
-                className="text-neutral-400 hover:text-white transition-colors duration-200"
-              >
-                Privacy Policy
-              </a>
-              <span className="text-neutral-700">•</span>
-              <a
-                href="#"
-                className="text-neutral-400 hover:text-white transition-colors duration-200"
-              >
-                Terms of Service
-              </a>
+            <div className="w-16 h-16 rounded-3xl bg-neutral-900 dark:bg-white flex items-center justify-center text-white dark:text-black font-black text-2xl shadow-premium">
+              AR
             </div>
           </motion.div>
+
+          <motion.h3
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-2xl md:text-3xl font-black text-neutral-900 dark:text-white mb-6"
+          >
+            Let's build something <span className="gradient-text">exceptional</span>.
+          </motion.h3>
+
+          {/* Social Links */}
+          <div className="flex gap-4 mb-16">
+            {socialLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-4 bg-neutral-100 dark:bg-white/5 text-neutral-500 hover:text-primary-500 hover:bg-white dark:hover:bg-white/10 rounded-2xl border border-transparent hover:border-neutral-200 dark:hover:border-white/10 transition-all duration-300"
+                  whileHover={{ y: -5 }}
+                  aria-label={link.label}
+                >
+                  <Icon size={22} />
+                </motion.a>
+              );
+            })}
+          </div>
+
+          {/* Nav Links */}
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 mb-16 text-sm font-bold uppercase tracking-widest text-neutral-400">
+            {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="hover:text-primary-500 transition-colors"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="w-full pt-12 border-t border-neutral-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-sm text-neutral-500 font-medium">
+              © {currentYear} <span className="text-neutral-900 dark:text-white font-bold">Anit Raj</span>.
+              Built with <Heart size={14} className="inline-block text-red-500 mx-1 fill-red-500" /> & Passion.
+            </p>
+
+            <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-neutral-400">
+              <span className="flex items-center gap-2">
+                <Code2 size={14} />
+                Flutter & React Specialist
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Scroll to Top Button */}
+      {/* Scroll to Top */}
       <AnimatePresence>
         {isVisible && (
           <motion.button
             onClick={scrollToTop}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            whileHover={{ scale: 1.1 }}
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            whileHover={{ scale: 1.1, y: -5 }}
             whileTap={{ scale: 0.9 }}
-            className="fixed bottom-8 right-8 p-4 bg-gradient-to-r from-primary-DEFAULT to-accent-DEFAULT text-white rounded-full shadow-2xl hover:shadow-3xl transition-shadow duration-300 z-50"
-            aria-label="Scroll to top"
+            className="fixed bottom-10 right-10 p-4 bg-neutral-900 dark:bg-white text-white dark:text-black rounded-2xl shadow-premium z-50 group overflow-hidden"
           >
-            <ArrowUp size={24} />
+            <div className="relative z-10">
+              <ArrowUp size={24} className="group-hover:-translate-y-1 transition-transform" />
+            </div>
+            <div className="absolute inset-0 bg-primary-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </motion.button>
         )}
       </AnimatePresence>
     </footer>
   );
 };
-
-// Import AnimatePresence from framer-motion
-import { AnimatePresence } from 'framer-motion';
 
 export default Footer;
