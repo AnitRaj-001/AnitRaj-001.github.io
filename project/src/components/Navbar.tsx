@@ -9,7 +9,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -20,47 +20,56 @@ const Navbar = () => {
     document.documentElement.classList.toggle('dark');
   };
 
-  const navItems = ['About', 'Skills', 'Projects', 'Education', 'Contact'];
+  const navItems = [
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Education', href: '#education' },
+    { name: 'Contact', href: '#contact' },
+  ];
 
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'py-3 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl shadow-lg border-b border-neutral-200 dark:border-neutral-800' 
-          : 'py-5 bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-4 lg:px-8">
+    <nav className="fixed w-full z-50 flex justify-center top-0 pt-6 transition-all duration-500 px-4 pointer-events-none">
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className={`w-full max-w-5xl pointer-events-auto transition-all duration-500 ${isScrolled
+          ? 'glass-panel rounded-full px-6 py-2 shadow-premium'
+          : 'bg-transparent py-4'
+          }`}
+      >
         <div className="flex items-center justify-between">
-          <a 
-            href="#" 
-            className="text-2xl font-poppins font-bold gradient-text hover:opacity-80 transition-opacity"
+          <motion.a
+            href="#"
+            className="text-2xl font-poppins font-black gradient-text tracking-tighter"
+            whileHover={{ scale: 1.05 }}
           >
-            AR
-          </a>
+            ANIT.
+          </motion.a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-8">
+          <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="relative font-medium text-neutral-700 dark:text-neutral-300 hover:text-primary-DEFAULT dark:hover:text-primary-DEFAULT transition-colors py-2 px-1"
-                whileHover={{ y: -2 }}
+                key={item.name}
+                href={item.href}
+                className="relative text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors py-2 px-4 rounded-full hover:bg-neutral-100/50 dark:hover:bg-white/5"
+                whileHover={{ y: -1 }}
               >
-                {item}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-DEFAULT to-accent-DEFAULT group-hover:w-full transition-all duration-300" />
+                {item.name}
               </motion.a>
             ))}
-            
+
+            <div className="h-6 w-px bg-neutral-200 dark:bg-neutral-800 mx-2" />
+
             <motion.button
               onClick={toggleTheme}
-              className="p-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors ml-4"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="p-2.5 rounded-full hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors"
+              whileHover={{ scale: 1.1, rotate: 15 }}
+              whileTap={{ scale: 0.9 }}
               aria-label="Toggle theme"
             >
-              {isDark ? <Sun size={20} className="text-yellow-500" /> : <Moon size={20} className="text-slate-600" />}
+              {isDark ? <Sun size={18} className="text-yellow-500" /> : <Moon size={18} className="text-slate-600" />}
             </motion.button>
           </div>
 
@@ -68,20 +77,16 @@ const Navbar = () => {
           <div className="md:hidden flex items-center gap-2">
             <motion.button
               onClick={toggleTheme}
-              className="p-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Toggle theme"
+              className="p-2.5 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              whileTap={{ scale: 0.9 }}
             >
               {isDark ? <Sun size={20} className="text-yellow-500" /> : <Moon size={20} className="text-slate-600" />}
             </motion.button>
-            
+
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Toggle menu"
+              className="p-2.5 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              whileTap={{ scale: 0.9 }}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
@@ -92,31 +97,30 @@ const Navbar = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden mt-4 pb-4 border-t border-neutral-200 dark:border-neutral-800"
+              initial={{ opacity: 0, scale: 0.95, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              className="md:hidden glass-panel mt-4 p-4 rounded-3xl absolute left-4 right-4"
             >
-              <div className="flex flex-col gap-2 pt-4">
+              <div className="flex flex-col gap-1">
                 {navItems.map((item, index) => (
                   <motion.a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    className="font-medium text-neutral-700 dark:text-neutral-300 hover:text-primary-DEFAULT dark:hover:text-primary-DEFAULT hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg px-3 py-2 transition-colors"
+                    key={item.name}
+                    href={item.href}
+                    className="font-semibold text-neutral-700 dark:text-neutral-300 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl px-4 py-3 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    {item}
+                    {item.name}
                   </motion.a>
                 ))}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </nav>
   );
 };
