@@ -1,51 +1,47 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Award, Zap, Code2, Database, Layout, Terminal } from 'lucide-react';
 
 const skills = {
-  'Programming Languages': [
-    { name: 'Flutter/Dart', level: 90 },
-    { name: 'Java', level: 85 },
-    { name: 'Kotlin', level: 80 },
-    { name: 'XML', level: 85 },
-    { name: 'MySQL', level: 75 },
-  ],
-  'Frameworks/Tools': [
-    { name: 'Firebase', level: 85 },
-    { name: 'Retrofit', level: 80 },
-    { name: 'Volley', level: 75 },
-    { name: 'Git & GitHub', level: 85 },
-  ],
-  'Concepts': [
-    { name: 'OOP', level: 90 },
-    { name: 'REST API', level: 85 },
-    { name: 'SDLC', level: 80 },
-  ],
+  'Mobile Development': {
+    icon: Code2,
+    color: 'primary',
+    items: ['Flutter', 'React Native', 'TypeScript', 'Java', 'Kotlin']
+  },
+  'Backend & Integration': {
+    icon: Database,
+    color: 'accent',
+    items: ['REST APIs', 'Firebase (Auth, Firestore)', 'Push Notifications', 'Node.js (Basics)']
+  },
+  'State Management': {
+    icon: Terminal,
+    color: 'primary',
+    items: ['Provider', 'Riverpod', 'Redux', 'Clean Architecture']
+  },
+  'Tools & Workflow': {
+    icon: Layout,
+    color: 'accent',
+    items: ['Git & GitHub', 'Postman', 'VS Code', 'Android Studio', 'Xcode', 'CI/CD Basics']
+  }
 };
 
-const SkillBar = ({ name, level, delay }: { name: string; level: number; delay: number }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  return (
-    <div ref={ref} className="mb-4">
-      <div className="flex justify-between mb-1">
-        <span className="text-sm font-medium">{name}</span>
-        <span className="text-sm text-gray-600 dark:text-gray-400">{level}%</span>
-      </div>
-      <div className="skill-progress">
-        <motion.div
-          className="skill-progress-bar"
-          initial={{ width: '0%' }}
-          animate={inView ? { width: `${level}%` } : {}}
-          transition={{ duration: 1, delay }}
-        />
-      </div>
-    </div>
-  );
-};
+const accomplishments = [
+  {
+    title: 'Performance Lead',
+    description: 'Improved API response time by 20% in production applications through efficient caching.',
+    icon: Zap
+  },
+  {
+    title: 'UX Focused',
+    description: 'Increased user retention by 15% through enhanced, intuitive UI/UX design patterns.',
+    icon: Layout
+  },
+  {
+    title: 'Certified Dev',
+    description: 'Successfully completed professional certifications in Flutter and Android Development.',
+    icon: Award
+  },
+];
 
 const Skills = () => {
   const [ref, inView] = useInView({
@@ -53,68 +49,107 @@ const Skills = () => {
     threshold: 0.1,
   });
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
   return (
-    <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-800">
-      <div className="container mx-auto px-4">
+    <section id="skills" className="py-24 lg:py-32 relative overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="max-w-6xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            Skills & Expertise
-          </h2>
+          {/* Section Header */}
+          <motion.div variants={itemVariants} className="mb-16">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px w-8 bg-primary-500" />
+              <span className="text-primary-600 dark:text-primary-400 font-bold tracking-widest uppercase text-xs">Expertise</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 dark:text-white">
+              Skills & <span className="gradient-text">Abilities</span>
+            </h2>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {Object.entries(skills).map(([category, items], categoryIndex) => (
-              <div key={category} className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg">
-                <h3 className="text-xl font-semibold mb-6">{category}</h3>
-                {items.map((skill, index) => (
-                  <SkillBar
-                    key={skill.name}
-                    name={skill.name}
-                    level={skill.level}
-                    delay={categoryIndex * 0.2 + index * 0.1}
-                  />
-                ))}
-              </div>
-            ))}
+          {/* Skills Grid */}
+          <div className="grid md:grid-cols-3 gap-8 mb-24">
+            {Object.entries(skills).map(([category, data]) => {
+              const Icon = data.icon;
+              return (
+                <motion.div
+                  key={category}
+                  variants={itemVariants}
+                  whileHover={{ y: -5 }}
+                  className="glass-card p-8 border-white/20 dark:border-white/5 relative overflow-hidden group"
+                >
+                  <div className={`absolute -right-4 -top-4 p-8 opacity-5 group-hover:opacity-10 transition-opacity text-${data.color}-500`}>
+                    <Icon size={100} />
+                  </div>
+
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className={`p-3 rounded-xl bg-${data.color}-500/10 text-${data.color}-600 dark:text-${data.color}-400`}>
+                      <Icon size={24} />
+                    </div>
+                    <h3 className="text-lg font-bold text-neutral-900 dark:text-white uppercase tracking-wider">{category}</h3>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {data.items.map((item) => (
+                      <span
+                        key={item}
+                        className="px-4 py-2 rounded-lg bg-neutral-100 dark:bg-white/5 text-neutral-700 dark:text-neutral-300 text-sm font-semibold border border-transparent hover:border-primary-500/30 transition-all"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
-          <div className="mt-12 bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-6">Professional Accomplishments</h3>
-            <ul className="space-y-4">
-              <motion.li
-                initial={{ opacity: 0, x: -20 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex items-start"
-              >
-                <div className="h-2 w-2 mt-2 rounded-full bg-blue-500 mr-3" />
-                <p>Improved API response time by 20% in an internal app project</p>
-              </motion.li>
-              <motion.li
-                initial={{ opacity: 0, x: -20 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex items-start"
-              >
-                <div className="h-2 w-2 mt-2 rounded-full bg-blue-500 mr-3" />
-                <p>Increased user retention by 15% through enhanced UI/UX design</p>
-              </motion.li>
-              <motion.li
-                initial={{ opacity: 0, x: -20 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="flex items-start"
-              >
-                <div className="h-2 w-2 mt-2 rounded-full bg-blue-500 mr-3" />
-                <p>Completed Flutter and Android Development certifications</p>
-              </motion.li>
-            </ul>
-          </div>
+          {/* Accomplishments */}
+          <motion.div variants={itemVariants}>
+            <h3 className="text-2xl font-black mb-10 flex items-center gap-4">
+              <Award size={28} className="text-accent-500" />
+              Accomplishments
+            </h3>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {accomplishments.map((item) => (
+                <motion.div
+                  key={item.title}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02 }}
+                  className="glass-panel p-8 border-white/20 dark:border-white/5 group hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
+                >
+                  <item.icon size={32} className="mb-6 text-primary-500" />
+                  <h4 className="text-xl font-bold mb-3 text-neutral-900 dark:text-white">{item.title}</h4>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    {item.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
