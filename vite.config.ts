@@ -1,9 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/AnitRaj-001.github.io/',
+  base: '/', 
   plugins: [react()],
   optimizeDeps: {
     exclude: ['lucide-react'],
