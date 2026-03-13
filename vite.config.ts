@@ -1,10 +1,9 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: '/', 
-  plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
-});
+  base: process.env.NODE_ENV === 'production'
+    ? '/AnitRaj-001.github.io/'
+    : '/',
+  plugins: [react()]
+})
