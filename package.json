@@ -1,5 +1,5 @@
 {
-  "homepage": "https://github.com/AnitRaj-001/AnitRaj-001.github.io",
+  "homepage": "https://AnitRaj-001.github.io",
   "name": "anit-raj-portfolio",
   "private": true,
   "version": "0.0.0",
@@ -8,8 +8,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
-  },
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  }
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "anit-raj-portfolio": "file:",
